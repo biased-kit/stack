@@ -25,6 +25,15 @@ type Call struct {
 	pc uintptr
 }
 
+// NewCall converts a program counter to a Call structure
+func NewCall(pc uintptr) Call {
+	c := Call{
+		pc: pc,
+		fn: runtime.FuncForPC(pc),
+	}
+	return c
+}
+
 // Caller returns a Call from the stack of the current goroutine. The argument
 // skip is the number of stack frames to ascend, with 0 identifying the
 // calling function.
@@ -231,6 +240,20 @@ func findSigpanic() *runtime.Func {
 }
 
 var sigpanic = findSigpanic()
+
+// NewCallStack creates a new CallStack based on slice of program counters, probably obtained by runtime.Callers() function.
+func NewCallStack(pcs []uintptr) CallStack {
+	cs := make([]Call, len(pcs))
+	for i, pc := range pcs {
+		pcFix := pc
+		if i > 0 && cs[i-1].fn != sigpanic {
+			pcFix--
+		}
+		cs[i] = NewCall(pcFix)
+	}
+
+	return cs
+}
 
 // Trace returns a CallStack for the current goroutine with element 0
 // identifying the calling function.
