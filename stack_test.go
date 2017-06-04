@@ -10,10 +10,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/go-stack/stack"
+	"github.com/biased-kit/stack"
 )
 
-const importPath = "github.com/go-stack/stack"
+const importPath = "github.com/biased-kit/stack"
 
 type testType struct{}
 
