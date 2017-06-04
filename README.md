@@ -7,7 +7,7 @@ Package stack's types implement fmt.Formatter, which provides a simple and flexi
 
 It was forked from https://github.com/go-stack/stack in order to add an ability to utilize already existed program counters (pc). 
 For this goal two functions were added:
- * NewCaller(pc int) Call
+ * NewCall(pc int) Call
  * NewCallStack(pcs []int) CallStack
 
 For other details find out original documentation at https://github.com/go-stack/stack
